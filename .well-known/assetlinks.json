@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.yusuf_bit004.tabel",
+      "sha256_cert_fingerprints": [
+        "67:93:41:BE:FA:B1:61:73:5B:B6:93:36:2C:B6:E0:11:AF:D9:13:00:3F:CB:34:CA:C6:F7:60:0D:69:A3:E6:3D"
+      ]
+    }
+  }
+]
