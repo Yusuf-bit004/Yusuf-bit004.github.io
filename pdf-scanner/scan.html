@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PDF Scanner</title>
+<link rel="manifest" href="scan-manifest.json">
+<meta name="theme-color" content="#0b1f4d">
+<style>
+:root{--b:#1a73e8;--bg:#f6f7f9;--c:#fff;--t:#1c1c1e;--m:#6b7280}
+@media(prefers-color-scheme:dark){:root{--bg:#121316;--c:#1e2025;--t:#eee;--m:#9aa0a6}}
+*{box-sizing:border-box}
+body{margin:0;font:16px system-ui,sans-serif;background:var(--bg);color:var(--t);padding-bottom:70px}
+header{background:linear-gradient(135deg,#0b1f4d,#1a73e8);color:#fff;padding:14px 16px;font-weight:600;font-size:18px}
+main{padding:12px;max-width:640px;margin:auto}
+.card{background:var(--c);border-radius:14px;padding:12px;margin-bottom:12px}
+button,.btn{background:var(--b);color:#fff;border:0;border-radius:10px;padding:11px 14px;font-size:15px;margin:3px 3px 3px 0;display:inline-block}
+button.s{background:transparent;color:var(--b);border:1px solid var(--b)}
+button.d{background:#d93025}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--c);border-top:1px solid #8884}
+nav button{flex:1;background:none;color:var(--m);border-radius:0;margin:0;padding:14px}
+nav button.on{color:var(--b);font-weight:600}
+.pg{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #8883}
+.pg img{width:56px;height:72px;object-fit:cover;border-radius:6px;background:#8883}
+.pg span{flex:1}
+input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid #8886;background:var(--c);color:var(--t);font-size:15px;margin:4px 0}
+.hid{display:none!important}
+#ed{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:9}
+#cv{flex:1;min-height:0;width:100%;touch-action:none}
+.bar{background:#111;padding:6px;display:flex;flex-wrap:wrap}
+#sp{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:10}
+#sp div{background:var(--c);padding:12px;border-radius:14px}
+#sc{background:#fff;border:1px solid #888;touch-action:none;display:block}
+.qa{display:flex;flex-wrap:wrap}.qa .btn,.qa button{flex:1 1 44%;text-align:center}#fc button{padding:7px 12px}#qr{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:11}#qv{flex:1;min-height:0;width:100%;object-fit:cover}#tt{position:fixed;left:12px;right:12px;bottom:80px;background:#000d;color:#fff;padding:10px;border-radius:10px;display:none;z-index:12;text-align:center}</style></head><body>
+<header><span style="background:#e53935;padding:2px 9px;border-radius:7px;margin-right:8px">PDF</span>Scanner</header>
+<main>
+<div id="v0">
+ <div class="card"><input id="q" placeholder="🔍 Поиск документов" oninput="lib0()">
+ <div class="qa">
+  <label class="btn">📷 Документ<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files]);this.value=''"></label>
+  <label class="btn">🖼 Фото<input type="file" accept="image/*" multiple hidden onchange="nw([...this.files]);this.value=''"></label>
+  <label class="btn">📖 Книга<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files],'book');this.value=''"></label><label class="btn">🪪 Удостоверение<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files],1);this.value=''"></label><label class="btn">📄 Импорт PDF<input type="file" accept="application/pdf" hidden onchange="ip(this.files[0]);this.value=''"></label><button onclick="qr()">▦ QR-код</button><button onclick="document.querySelectorAll('nav button')[1].click()">🧰 PDF-инструменты</button>
+ </div></div>
+ <div class="card"><div id="fc"></div><button class="s" onclick="SO=!SO;lib0()">⇅ Сортировка</button><button class="s" onclick="mgd()">⧉ Объединить выбранные</button><div id="dl"></div></div>
+</div>
+<div id="v1" class="hid">
+ <div class="card"><button class="s" onclick="bk()">← Назад</button><input id="nm" placeholder="Название документа">
+  <label class="btn">📷 Снять<input type="file" accept="image/*" capture="environment" hidden onchange="add([...this.files],1);this.value=''"></label><label class="btn">🖼 Добавить<input type="file" accept="image/*" multiple hidden onchange="add([...this.files]);this.value=''"></label></div>
+ <div class="card" id="ls"></div>
+ <div class="card">
+  <select id="pp"><option value="1">1 страница на листе</option><option value="2">2 на листе (удостоверение)</option></select>
+  <input id="pw" type="password" placeholder="Пароль на PDF (необязательно)">
+  <button onclick="sv()">Сохранить PDF</button><button class="s" onclick="oc()">Распознать текст (OCR)</button><button class="s" onclick="wd()">В Word (.doc)</button><button class="s" onclick="ji()">Сохранить как JPG</button>
+  <div id="st" style="color:var(--m)"></div>
+  <textarea id="ot" rows="6" placeholder="Здесь появится текст"></textarea>
+  <button class="s" onclick="navigator.clipboard.writeText($('#ot').value)">Копировать</button>
+  <button class="s" onclick="fin(new Blob([$('#ot').value],{type:'text/plain'}),'text.txt')">Сохранить .txt</button>
+ </div>
+</div>
+<div id="v2" class="hid">
+ <div class="card"><b>Объединить PDF</b><input id="mf" type="file" accept="application/pdf" multiple><button onclick="mg()">Объединить</button></div>
+ <div class="card"><b>Разделить / извлечь страницы</b><input id="sf" type="file" accept="application/pdf"><input id="rg" placeholder="Страницы: 1-3,5"><button onclick="sp()">Извлечь</button></div>
+</div>
+<div id="v3" class="hid">
+ <div class="card"><b>Качество PDF</b><select id="ql" onchange="localStorage.q=this.value"><option value=".6">Малый размер</option><option value=".85">Обычное</option><option value=".95">Высокое</option></select>
+ <button class="s" onclick="pin()">🔒 PIN-код</button><button class="s" onclick="bkp()">☁ Резервная копия</button><label class="btn" style="background:none;color:var(--b);border:1px solid var(--b)">⤓ Восстановить<input type="file" accept="application/json" hidden onchange="rst(this.files[0]);this.value=''"></label><button class="d" onclick="ca()">Удалить все документы</button>
+ <p style="color:var(--m)">Документы хранятся в этом телефоне. Резервную копию можно сохранить в Google Диск через меню «Поделиться».</p></div>
+</div>
+</main>
+<nav><button class="on" onclick="tab(0,this)">Главная</button><button onclick="tab(2,this)">Инструменты</button><button onclick="tab(3,this)">Профиль</button></nav>
+<div id="tt"></div><div id="qr"><video id="qv" playsinline muted></video><div class="bar"><span id="qt" style="color:#fff;flex:1;word-break:break-all">Наведите на QR-код</span><button onclick="qc()">Копировать</button><button onclick="qo()">Открыть</button><button class="d" onclick="qx()">✕</button></div></div>
+
+<div id="ed"><canvas id="cv"></canvas><div class="bar">
+ <button onclick="md('crop')">Обрезка</button><button onclick="au()">Авто</button><button onclick="rt()">⟳</button>
+ <button onclick="fl('c')">Цвет</button><button onclick="fl('g')">Серый</button><button onclick="fl('d')">Документ</button><button onclick="fl('b')">Ч/Б</button><button onclick="fl('m')">Магия</button>
+ <button onclick="sg()">Подпись</button><button class="d" onclick="ns()">✕ подпись</button><button onclick="dn()">Готово</button>
+</div></div>
+
+<div id="sp"><div><canvas id="sc" width="300" height="150"></canvas>
+ <button class="s" onclick="sc.getContext('2d').clearRect(0,0,300,150)">Очистить</button>
+ <button onclick="ss()">Готово</button></div></div>
+
+<script>
+const $=s=>document.querySelector(s),P=[],SI=new Image(),cl=v=>Math.max(0,Math.min(1,v));
+let cur=null,mode='crop',G={},dg=-1,sig=null;
+try{sig=localStorage.sig||null}catch(e){}
+if(sig)SI.src=sig;
+if('serviceWorker' in navigator)navigator.serviceWorker.register('scan-sw.js');
+onunhandledrejection=e=>alert(e.reason&&e.reason.message||e.reason);
+
+const LB={},lib=u=>LB[u[0]]||(LB[u[0]]=(async()=>{for(const s of u){try{await new Promise((r,j)=>{const e=document.createElement('script');e.src=s;e.onload=r;e.onerror=j;document.head.appendChild(e)});return}catch(e){}}delete LB[u[0]];throw new Error('Не удалось загрузить библиотеку. Проверьте интернет.')})()),
+JP=['https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'],
+PL=['https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js','https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js'],
+TS=['https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js','https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.0/tesseract.min.js'];
+
+const ld=f=>new Promise(r=>{const i=new Image();i.onload=()=>{const k=Math.min(1,2000/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*k|0;c.height=i.height*k|0;c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(i.src);r(c)};i.src=URL.createObjectURL(f)});
+
+function flt(c,t){
+ if(t=='c')return;
+ const x=c.getContext('2d'),d=x.getImageData(0,0,c.width,c.height),a=d.data;let s=0;
+ for(let i=0;i<a.length;i+=4){const g=.3*a[i]+.59*a[i+1]+.11*a[i+2];a[i]=a[i+1]=a[i+2]=g;s+=g}
+ const m=s/(a.length/4);if(t=='m'){am(a,c.width,c.height);x.putImageData(d,0,0);return}
+ if(t!='g')for(let i=0;i<a.length;i+=4){
+  let g=a[i];
+  if(t=='d'){g=Math.min(255,g*255/(m*1.1));g=Math.max(0,Math.min(255,(g-140)*1.6+140))}
+  else g=g<m*.75?0:255;
+  a[i]=a[i+1]=a[i+2]=g}
+ x.putImageData(d,0,0)}
+
+function rd(p){
+ const b=wp(p),r=document.createElement('canvas');r.width=b.width;r.height=b.height;const x=r.getContext('2d');x.drawImage(b,0,0);flt(r,p.f);
+ if(p.s&&SI.complete&&SI.width){const w=r.width,h=r.height,sw=w*.3,sh=sw*SI.height/SI.width;x.drawImage(SI,p.s.x*w-sw/2,p.s.y*h-sh/2,sw,sh)}
+ return r}
+
+function th(p){const r=rd(p),k=120/Math.max(r.width,r.height),t=document.createElement('canvas');t.width=r.width*k|0||1;t.height=r.height*k|0||1;t.getContext('2d').drawImage(r,0,0,t.width,t.height);return t.toDataURL('image/jpeg',.6)}
+
+function ls0(){$('#ls').innerHTML=P.map((p,i)=>`<div class="pg"><img src="${p.t}" onclick="edit(${i})"><span>Стр. ${i+1}</span><button class="s" onclick="mv(${i},-1)">↑</button><button class="s" onclick="mv(${i},1)">↓</button><button class="d" onclick="P.splice(${i},1);ls()">✕</button></div>`).join('')||'<span style="color:var(--m)">Страниц нет. Снимите документ или выберите фото.</span>'}
+function mv(i,d){const j=i+d;if(j<0||j>=P.length)return;[P[i],P[j]]=[P[j],P[i]];ls()}
+async function add(fs,e){for(const f of fs){const p={o:await ld(f),q:Q0(),f:'d',s:null};p.q=await det(p.o);p.t=th(p);P.push(p)}tt('');ls();if(e&&fs.length)edit(P.length-1)}
+
+function edit(i){cur=P[i];mode='crop';$('#ed').style.display='flex';dr()}
+function dn(){cur.t=th(cur);$('#ed').style.display='none';ls()}
+function md(m){mode=m;dr()}
+function fl(t){cur.f=t;mode='res';dr()}
+function rt(){const o=cur.o,c=document.createElement('canvas');c.width=o.height;c.height=o.width;const x=c.getContext('2d');x.translate(c.width,0);x.rotate(Math.PI/2);x.drawImage(o,0,0);cur.o=c;delete cur.src;cur.q=Q0();delete cur.wk;cur.s=null;mode='crop';dr()}
+function sg(){if(!sig){$('#sp').style.display='flex';return}cur.s={x:.75,y:.88};mode='res';dr()}
+function ns(){cur.s=null;dr()}
+
+function dr(){
+ const cv=$('#cv'),x=cv.getContext('2d'),W=cv.width=cv.clientWidth,H=cv.height=cv.clientHeight,
+ src=mode=='crop'?cur.o:rd(cur),k=Math.min(W/src.width,H/src.height),dw=src.width*k,dh=src.height*k,ox=(W-dw)/2,oy=(H-dh)/2;
+ G={ox,oy,dw,dh};x.drawImage(src,ox,oy,dw,dh);
+ if(mode=='crop'){const Z=cur.q.map(([u,v])=>[ox+u*dw,oy+v*dh]);x.strokeStyle=x.fillStyle='#1a73e8';x.lineWidth=3;x.beginPath();Z.forEach(([u,v],i)=>i?x.lineTo(u,v):x.moveTo(u,v));x.closePath();x.stroke();Z.forEach(([u,v])=>{x.beginPath();x.arc(u,v,14,0,7);x.fill()})}}
+
+const cv=$('#cv');
+cv.onpointerdown=e=>{
+ const r=cv.getBoundingClientRect(),u=e.clientX-r.left,v=e.clientY-r.top;dg=-1;
+ if(mode=='crop'){let best=50;cur.q.forEach(([a,b],i)=>{const d=Math.hypot(G.ox+a*G.dw-u,G.oy+b*G.dh-v);if(d<best){best=d;dg=i}})}
+ else if(cur.s){cur.s={x:cl((u-G.ox)/G.dw),y:cl((v-G.oy)/G.dh)};dr()}};
+cv.onpointermove=e=>{if(dg<0)return;const r=cv.getBoundingClientRect();cur.q[dg]=[cl((e.clientX-r.left-G.ox)/G.dw),cl((e.clientY-r.top-G.oy)/G.dh)];dr()};
+cv.onpointerup=()=>dg=-1;
+
+const sc=$('#sc');let dw_=false;
+sc.onpointerdown=e=>{dw_=true;const x=sc.getContext('2d'),r=sc.getBoundingClientRect();x.lineWidth=3;x.lineCap='round';x.beginPath();x.moveTo(e.clientX-r.left,e.clientY-r.top)};
+sc.onpointermove=e=>{if(!dw_)return;const x=sc.getContext('2d'),r=sc.getBoundingClientRect();x.lineTo(e.clientX-r.left,e.clientY-r.top);x.stroke()};
+sc.onpointerup=()=>dw_=false;
+function ss(){sig=sc.toDataURL();try{localStorage.sig=sig}catch(e){}SI.onload=()=>{$('#sp').style.display='none';sg()};SI.src=sig}
+
+async function fin(b,n){
+ const f=new File([b],n,{type:b.type});
+ if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e.name=='AbortError')return}}
+ const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;a.click()}
+
+async function sv(){
+ if(!P.length)return alert('Нет страниц');
+ const pw=$('#pw').value,per=+$('#pp').value,q=+(localStorage.q||.85);
+ $('#st').textContent='Загрузка…';await lib(JP);$('#st').textContent='';
+ const im=P.map(rd),or=o=>o.width>o.height?'l':'p',
+ d=new jspdf.jsPDF({unit:'mm',format:'a4',orientation:per==2?'p':or(im[0]),compress:true,encryption:pw?{userPassword:pw,ownerPassword:pw+'#own',userPermissions:['print','copy']}:undefined});
+ if(per==2){for(let i=0;i<im.length;i+=2){if(i)d.addPage('a4','p');[im[i],im[i+1]].forEach((r,j)=>{if(!r)return;const k=Math.min(190/r.width,130/r.height),w=r.width*k,h=r.height*k;d.addImage(r.toDataURL('image/jpeg',q),'JPEG',10+(190-w)/2,10+j*138+(130-h)/2,w,h)})}}
+ else im.forEach((r,i)=>{const l=or(r)=='l',W=l?297:210,H=l?210:297,k=Math.min(W/r.width,H/r.height),w=r.width*k,h=r.height*k;if(i)d.addPage('a4',or(r));d.addImage(r.toDataURL('image/jpeg',q),'JPEG',(W-w)/2,(H-h)/2,w,h)});
+ fin(d.output('blob'),(D?D.name:'scan')+'.pdf')}
+
+async function oc(){
+ if(!P.length)return alert('Нет страниц');
+ const st=$('#st');let s='';
+ try{st.textContent='Загрузка распознавания (нужен интернет в первый раз)…';await lib(TS);
+  const w=await Tesseract.createWorker('rus+eng');
+  for(let i=0;i<P.length;i++){st.textContent=`Страница ${i+1} из ${P.length}…`;
+   const {data}=await w.recognize(rd(P[i]));s+=(P.length>1?`--- Стр. ${i+1} ---\n`:'')+data.text+'\n'}
+  await w.terminate();$('#ot').value=s;st.textContent='Готово'}
+ catch(e){st.textContent='Ошибка: '+(e.message||e)}}
+
+const pdf=()=>PDFLib.PDFDocument;
+async function mg(){
+ const fs=[...$('#mf').files];if(fs.length<2)return alert('Выберите минимум 2 PDF');await lib(PL);
+ const o=await pdf().create();
+ for(const f of fs){const s=await pdf().load(await f.arrayBuffer(),{ignoreEncryption:true});(await o.copyPages(s,s.getPageIndices())).forEach(p=>o.addPage(p))}
+ fin(new Blob([await o.save()],{type:'application/pdf'}),'merged.pdf')}
+async function sp(){
+ const f=$('#sf').files[0];if(!f)return alert('Выберите PDF');await lib(PL);
+ const s=await pdf().load(await f.arrayBuffer(),{ignoreEncryption:true}),n=s.getPageCount(),ix=[];
+ $('#rg').value.split(',').forEach(t=>{const [a,b=a]=t.split('-').map(Number);for(let i=a;i<=b;i++)if(i>=1&&i<=n)ix.push(i-1)});
+ if(!ix.length)return alert('Укажите страницы, например 1-3,5 (всего '+n+')');
+ const o=await pdf().create();(await o.copyPages(s,ix)).forEach(p=>o.addPage(p));
+ fin(new Blob([await o.save()],{type:'application/pdf'}),'extract.pdf')}
+
+let D=null,FF='',SO=false,DT=0,tm,QS,QI;const FO=JSON.parse(localStorage.fo||'[]'),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const DB=new Promise((r,j)=>{const q=indexedDB.open('ps',1);q.onupgradeneeded=()=>{q.result.createObjectStore('m',{keyPath:'id'});q.result.createObjectStore('p',{keyPath:'id'})};q.onsuccess=()=>r(q.result);q.onerror=j});
+const tx=async(st,m,f)=>{const d=await DB;return new Promise((r,j)=>{const t=d.transaction(st,m),q=f(t.objectStore(st));t.oncomplete=()=>r(q&&q.result);t.onerror=j})};
+const fs_=src=>new Promise(r=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=i.width;c.height=i.height;c.getContext('2d').drawImage(i,0,0);r(c)};i.src=src});
+function show(k){['v0','v1','v2','v3'].forEach((x,i)=>$('#'+x).classList.toggle('hid',i!=k))}
+function tab(n,b){document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');n==0?bk():show(n)}
+function ls(z){ls0();if(!z)sd()}
+function sd(){DT=1;clearTimeout(tm);tm=setTimeout(sdo,600)}
+async function sdo(){
+ if(!D||!DT)return;DT=0;
+ if(!P.length){await tx('m','readwrite',s=>s.delete(D.id));await tx('p','readwrite',s=>s.delete(D.id));return}
+ D.n=P.length;D.ts=Date.now();D.t=P[0].t;
+ await tx('m','readwrite',s=>s.put(D));
+ await tx('p','readwrite',s=>s.put({id:D.id,pages:P.map(p=>({src:p.src||(p.src=p.o.toDataURL('image/jpeg',.85)),q:p.q,f:p.f,s:p.s}))}))}
+async function bk(){clearTimeout(tm);await sdo();D=null;P.length=0;show(0);lib0()}
+async function nw(fs,id){if(!fs.length)return;D={id:Date.now(),name:id=='book'?'Книга '+new Date().toLocaleDateString('ru'):id?'Удостоверение':'Скан '+new Date().toLocaleDateString('ru'),folder:FF,ts:Date.now(),n:0,t:''};P.length=0;$('#nm').value=D.name;$('#pp').value=id===1?'2':'1';show(1);
+ if(id=='book'){NOD=1;try{await add(fs,false)}finally{NOD=0}const a=[...P];P.length=0;
+  a.forEach(p=>{const L={o:p.o,q:[[0,0],[.5,0],[.5,1],[0,1]],f:p.f,s:null},R={o:p.o,q:[[.5,0],[1,0],[1,1],[.5,1]],f:p.f,s:null};L.t=th(L);R.t=th(R);P.push(L,R)});
+  ls();tt('Книга разделена на страницы. Нажмите на страницу, чтобы поправить рамку.');setTimeout(()=>tt(''),6000);return}
+ await add(fs,fs.length==1);if(id){tt('Теперь снимите обратную сторону кнопкой «Снять»');setTimeout(()=>tt(''),7000)}}
+async function op(id){
+ const m=await tx('m','readonly',s=>s.get(id)),g=await tx('p','readonly',s=>s.get(id));
+ D=m;P.length=0;
+ for(const x of g.pages){const p={o:await fs_(x.src),q:x.q,f:x.f,s:x.s,src:x.src};p.t=th(p);P.push(p)}
+ $('#nm').value=D.name;show(1);ls(true)}
+$('#nm').oninput=()=>{if(D){D.name=$('#nm').value||'Скан';sd()}};
+async function lib0(){
+ const m=(await tx('m','readonly',s=>s.getAll()))||[],q=$('#q').value.toLowerCase();
+ const a=m.filter(x=>(!FF||x.folder==FF)&&x.name.toLowerCase().includes(q)).sort((x,y)=>SO?x.name.localeCompare(y.name):y.ts-x.ts);
+ $('#fc').innerHTML=['',...FO].map((f,i)=>`<button class="${FF==f?'':'s'}" onclick="FF=FO[${i-1}]||'';lib0()">${f?esc(f):'Все'}</button>`).join('')+'<button class="s" onclick="nf()">＋ папка</button>';
+ $('#dl').innerHTML=a.map(x=>`<div class="pg"><input type="checkbox" class="ck" value="${x.id}" style="width:auto"><img src="${x.t}" onclick="op(${x.id})"><span onclick="op(${x.id})"><b>${esc(x.name)}</b><br><small style="color:var(--m)">${new Date(x.ts).toLocaleString('ru')} · ${x.n} стр.${x.folder?' · 📁'+esc(x.folder):''}</small></span><button class="s" onclick="shr(${x.id})">↗</button><button class="s" onclick="rn(${x.id})">✎</button><button class="s" onclick="mf(${x.id})">📁</button><button class="d" onclick="dd(${x.id})">✕</button></div>`).join('')||'<span style="color:var(--m)">Документов нет. Нажмите «Документ» или «Фото».</span>'}
+async function um(id,f){const m=await tx('m','readonly',s=>s.get(id));if(f(m)===false)return;await tx('m','readwrite',s=>s.put(m));lib0()}
+const rn=id=>um(id,m=>{const n=prompt('Новое название',m.name);if(!n)return false;m.name=n});
+const mf=id=>um(id,m=>{const n=prompt('Папка (пусто — без папки). Есть: '+FO.join(', '),m.folder);if(n===null)return false;if(n&&!FO.includes(n)){FO.push(n);localStorage.fo=JSON.stringify(FO)}m.folder=n});
+function nf(){const n=prompt('Название папки');if(n&&!FO.includes(n)){FO.push(n);localStorage.fo=JSON.stringify(FO);lib0()}}
+async function dd(id){if(!confirm('Удалить документ?'))return;await tx('m','readwrite',s=>s.delete(id));await tx('p','readwrite',s=>s.delete(id));lib0()}
+async function ca(){if(!confirm('Удалить все документы?'))return;await tx('m','readwrite',s=>s.clear());await tx('p','readwrite',s=>s.clear());lib0()}
+$('#ql').value=localStorage.q||'.85';
+async function qr(){
+ if(!('BarcodeDetector' in window))return alert('QR-сканер не поддерживается в этом браузере');
+ QS=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+ $('#qr').style.display='flex';const v=$('#qv');v.srcObject=QS;await v.play();
+ const bd=new BarcodeDetector({formats:['qr_code']});
+ QI=setInterval(async()=>{try{const r=await bd.detect(v);if(r.length)$('#qt').textContent=r[0].rawValue}catch(e){}},400)}
+function qx(){clearInterval(QI);QS&&QS.getTracks().forEach(t=>t.stop());$('#qr').style.display='none'}
+const qc=()=>navigator.clipboard.writeText($('#qt').textContent);
+const qo=()=>{const t=$('#qt').textContent;if(/^https?:/.test(t))window.open(t,'_blank')};
+
+
+const Q0=()=>[[0,0],[1,0],[1,1],[0,1]],tt=t=>{const e=$('#tt');e.textContent=t;e.style.display=t?'block':'none'},
+OC=['https://cdn.jsdelivr.net/npm/@techstark/opencv-js@4.9.0-release.2/dist/opencv.js'];
+let CV;
+async function cvl(){
+ if(CV)return CV;await lib(OC);let c=window.cv;
+ if(c&&typeof c.then=='function')c=await c;else if(!c.Mat)await new Promise(r=>{c.onRuntimeInitialized=r});
+ return CV=c}
+function ord(p){const s=a=>a[0]+a[1],d=a=>a[0]-a[1],mn=f=>p.reduce((a,b)=>f(a)<=f(b)?a:b),mx=f=>p.reduce((a,b)=>f(a)>=f(b)?a:b);return[mn(s),mx(d),mx(s),mn(d)]}
+function dcv(cv,o){
+ const k=500/Math.max(o.width,o.height),s=document.createElement('canvas');s.width=o.width*k|0;s.height=o.height*k|0;s.getContext('2d').drawImage(o,0,0,s.width,s.height);
+ const src=cv.imread(s),g=new cv.Mat(),e=new cv.Mat(),hi=new cv.Mat(),cs=new cv.MatVector(),kn=cv.Mat.ones(3,3,cv.CV_8U);
+ cv.cvtColor(src,g,cv.COLOR_RGBA2GRAY);cv.GaussianBlur(g,g,new cv.Size(5,5),0);cv.Canny(g,e,60,160);cv.dilate(e,e,kn);
+ cv.findContours(e,cs,hi,cv.RETR_LIST,cv.CHAIN_APPROX_SIMPLE);
+ let best=null,ba=s.width*s.height*.15;
+ for(let i=0;i<cs.size();i++){const c=cs.get(i),a=cv.contourArea(c);
+  if(a>ba){const ap=new cv.Mat();cv.approxPolyDP(c,ap,.02*cv.arcLength(c,true),true);
+   if(ap.rows==4&&cv.isContourConvex(ap)){ba=a;best=[0,1,2,3].map(j=>[ap.data32S[j*2]/s.width,ap.data32S[j*2+1]/s.height])}ap.delete()}c.delete()}
+ [src,g,e,hi,cs,kn].forEach(m=>m.delete());
+ return best?ord(best):dl(o)}
+function dl(o){
+ const k=160/Math.max(o.width,o.height),w=Math.max(1,o.width*k|0),h=Math.max(1,o.height*k|0),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(o,0,0,w,h);
+ const a=x.getImageData(0,0,w,h).data,g=[];let s=0;for(let i=0;i<a.length;i+=4){const v=.3*a[i]+.59*a[i+1]+.11*a[i+2];g.push(v);s+=v}
+ const t=s/g.length,R=Array(h).fill(0),C=Array(w).fill(0);g.forEach((v,i)=>{if(v>t){R[i/w|0]++;C[i%w]++}});
+ const f=(A,n)=>{const a=A.findIndex(v=>v>n*.08),b=A.length-1-[...A].reverse().findIndex(v=>v>n*.08);return a<0?[0,1]:[a/A.length,(b+1)/A.length]};
+ const[x0,x1]=f(C,h),[y0,y1]=f(R,w);
+ return(x1-x0)*(y1-y0)<.2?Q0():[[x0,y0],[x1,y0],[x1,y1],[x0,y1]]}
+let NOD=0;
+async function det(o){if(NOD)return Q0();
+ try{if(!CV)tt('Первый раз: загружаю модуль авто-обрезки (около 10 МБ)…');
+  const c=await Promise.race([cvl(),new Promise((_,j)=>setTimeout(j,90000))]);
+  tt('Ищу края документа…');return dcv(c,o)}
+ catch(e){return dl(o)}}
+async function au(){tt('Ищу края документа…');cur.q=await det(cur.o);tt('');mode='crop';dr()}
+function wp(p){
+ const k=JSON.stringify(p.q);if(p.wk===k)return p.wc;
+ const o=p.o,W=o.width,H=o.height,q=p.q.map(([x,y])=>[x*W,y*H]),d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]),
+ w=Math.max(2,Math.round(Math.max(d(q[0],q[1]),d(q[3],q[2])))),h=Math.max(2,Math.round(Math.max(d(q[0],q[3]),d(q[1],q[2])))),
+ r=document.createElement('canvas');r.width=w;r.height=h;const x=r.getContext('2d'),e=1.5;
+ if(Math.abs(q[0][1]-q[1][1])<e&&Math.abs(q[3][1]-q[2][1])<e&&Math.abs(q[0][0]-q[3][0])<e&&Math.abs(q[1][0]-q[2][0])<e)x.drawImage(o,q[0][0],q[0][1],q[1][0]-q[0][0],q[3][1]-q[0][1],0,0,w,h);
+ else{const S=o.getContext('2d').getImageData(0,0,W,H).data,I=x.createImageData(w,h),T=I.data;
+  for(let j=0;j<h;j++){const v=j/(h-1);for(let i=0;i<w;i++){const u=i/(w-1),
+   sx=(1-v)*((1-u)*q[0][0]+u*q[1][0])+v*((1-u)*q[3][0]+u*q[2][0]),sy=(1-v)*((1-u)*q[0][1]+u*q[1][1])+v*((1-u)*q[3][1]+u*q[2][1]),
+   x0=Math.max(0,Math.min(W-2,sx|0)),y0=Math.max(0,Math.min(H-2,sy|0)),fx=sx-x0,fy=sy-y0,a=(y0*W+x0)*4,b=a+4,c=a+W*4,dd=c+4,t=(j*w+i)*4;
+   for(let m=0;m<4;m++)T[t+m]=(S[a+m]*(1-fx)+S[b+m]*fx)*(1-fy)+(S[c+m]*(1-fx)+S[dd+m]*fx)*fy}}
+  x.putImageData(I,0,0)}
+ p.wk=k;p.wc=r;return r}
+
+
+function am(a,w,h){
+ const I=new Float64Array((w+1)*(h+1)),r=Math.max(8,w/16|0);
+ for(let y=0;y<h;y++){let s=0;for(let x=0;x<w;x++){s+=a[(y*w+x)*4];I[(y+1)*(w+1)+x+1]=I[y*(w+1)+x+1]+s}}
+ for(let y=0;y<h;y++){const y0=Math.max(0,y-r),y1=Math.min(h,y+r+1);for(let x=0;x<w;x++){const x0=Math.max(0,x-r),x1=Math.min(w,x+r+1),
+  m=(I[y1*(w+1)+x1]-I[y0*(w+1)+x1]-I[y1*(w+1)+x0]+I[y0*(w+1)+x0])/((x1-x0)*(y1-y0)),i=(y*w+x)*4,g=a[i]<m*.88?a[i]*.6:255;a[i]=a[i+1]=a[i+2]=g}}}
+const PJ=['https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js'],PW='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+async function ip(f){
+ if(!f)return;tt('Открываю PDF…');await lib(PJ);
+ pdfjsLib.GlobalWorkerOptions.workerSrc=URL.createObjectURL(new Blob([await(await fetch(PW)).text()],{type:'text/javascript'}));
+ const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;
+ D={id:Date.now(),name:f.name.replace(/\.pdf$/i,''),folder:FF,ts:Date.now(),n:0,t:''};P.length=0;$('#nm').value=D.name;$('#pp').value='1';show(1);
+ for(let i=1;i<=d.numPages;i++){tt(`Страница ${i} из ${d.numPages}…`);const g=await d.getPage(i),vp=g.getViewport({scale:2}),c=document.createElement('canvas');c.width=vp.width|0;c.height=vp.height|0;
+  await g.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;const p={o:c,q:Q0(),f:'c',s:null};p.t=th(p);P.push(p)}
+ tt('');ls()}
+async function shr(id){await op(id);show(0);await sv();clearTimeout(tm);P.length=0;D=null;DT=0}
+async function mgd(){
+ const ids=[...document.querySelectorAll('.ck:checked')].map(c=>+c.value);if(ids.length<2)return alert('Отметьте 2 и больше документов');
+ const pg=[];for(const id of ids){const g=await tx('p','readonly',s=>s.get(id));pg.push(...g.pages)}
+ const id=Date.now(),m=await tx('m','readonly',s=>s.get(ids[0]));
+ await tx('p','readwrite',s=>s.put({id,pages:pg}));
+ await tx('m','readwrite',s=>s.put({id,name:'Объединённый '+new Date().toLocaleDateString('ru'),folder:FF,ts:Date.now(),n:pg.length,t:m.t}));lib0()}
+async function wd(){
+ await oc();const t=$('#ot').value;if(!t)return;
+ fin(new Blob(['\ufeff<html><head><meta charset="utf-8"></head><body>'+esc(t).replace(/\n/g,'<br>')+'</body></html>'],{type:'application/msword'}),D.name+'.doc')}
+async function ji(){
+ if(!P.length)return;
+ const bl=await Promise.all(P.map(p=>new Promise(r=>rd(p).toBlob(r,'image/jpeg',.9)))),fs=bl.map((b,i)=>new File([b],`${D.name}-${i+1}.jpg`,{type:'image/jpeg'}));
+ if(navigator.canShare&&navigator.canShare({files:fs})){try{await navigator.share({files:fs});return}catch(e){if(e.name=='AbortError')return}}
+ fs.forEach(f=>{const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;a.click()})}
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('ps'+s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+async function pin(){
+ const p=prompt('Новый PIN (минимум 4 символа). Пусто — убрать PIN');if(p===null)return;
+ if(!p){delete localStorage.pin;return alert('PIN убран')}
+ if(p.length<4)return alert('Слишком короткий PIN');localStorage.pin=await sha(p);alert('PIN установлен')}
+async function lk(){
+ if(!localStorage.pin)return;document.body.style.visibility='hidden';
+ while(1){const p=prompt('Введите PIN');if(p&&await sha(p)==localStorage.pin)break}
+ document.body.style.visibility=''}
+
+
+async function bkp(){const m=await tx('m','readonly',s=>s.getAll()),q=await tx('p','readonly',s=>s.getAll());if(!m.length)return alert('Документов пока нет');fin(new Blob([JSON.stringify({m,p:q})],{type:'application/json'}),'pdf-scanner-backup.json')}
+async function rst(f){if(!f)return;const j=JSON.parse(await f.text());for(const x of j.m)await tx('m','readwrite',s=>s.put(x));for(const x of j.p)await tx('p','readwrite',s=>s.put(x));lib0();alert('Восстановлено документов: '+j.m.length)}
+
+lk().then(lib0);
+</script></body></html>
