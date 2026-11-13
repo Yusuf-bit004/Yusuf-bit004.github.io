@@ -5,74 +5,109 @@
 <link rel="manifest" href="scan-manifest.json">
 <meta name="theme-color" content="#0b1f4d">
 <style>
-:root{--b:#1a73e8;--bg:#f6f7f9;--c:#fff;--t:#1c1c1e;--m:#6b7280}
-@media(prefers-color-scheme:dark){:root{--bg:#121316;--c:#1e2025;--t:#eee;--m:#9aa0a6}}
-*{box-sizing:border-box}
-body{margin:0;font:16px system-ui,sans-serif;background:var(--bg);color:var(--t);padding-bottom:70px}
-header{background:linear-gradient(135deg,#0b1f4d,#1a73e8);color:#fff;padding:14px 16px;font-weight:600;font-size:18px}
+:root{--b:#2f7bff;--bg:#050b1e;--c:#0e1a3a;--t:#eef3ff;--m:#8fa3d6;--ln:#2f5bd655}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font:16px/1.4 "Segoe UI",Roboto,system-ui,sans-serif;color:var(--t);padding-bottom:160px;background:radial-gradient(circle at 85% 0,#0b3bb5 0,transparent 42%),radial-gradient(circle at 0 45%,#0a2a7a 0,transparent 38%),var(--bg);background-attachment:fixed}
+header{display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:800;font-size:20px;letter-spacing:.3px;background:linear-gradient(135deg,#0b1f4d,#1a5fd8);box-shadow:0 4px 24px #0b3bb577}
+header b{background:#e53935;padding:2px 9px;border-radius:8px;font-size:17px}
 main{padding:12px;max-width:640px;margin:auto}
-.card{background:var(--c);border-radius:14px;padding:12px;margin-bottom:12px}
-button,.btn{background:var(--b);color:#fff;border:0;border-radius:10px;padding:11px 14px;font-size:15px;margin:3px 3px 3px 0;display:inline-block}
-button.s{background:transparent;color:var(--b);border:1px solid var(--b)}
-button.d{background:#d93025}
-nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--c);border-top:1px solid #8884}
-nav button{flex:1;background:none;color:var(--m);border-radius:0;margin:0;padding:14px}
-nav button.on{color:var(--b);font-weight:600}
-.pg{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #8883}
-.pg img{width:56px;height:72px;object-fit:cover;border-radius:6px;background:#8883}
-.pg span{flex:1}
-input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid #8886;background:var(--c);color:var(--t);font-size:15px;margin:4px 0}
+h3{margin:4px 2px 10px;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--m);font-weight:700}
+.card{background:linear-gradient(160deg,#101f4a,#0b1636);border:1px solid var(--ln);border-radius:20px;padding:14px;margin-bottom:14px;box-shadow:0 0 28px #1a4dff1f}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-size:15px;font-weight:600;color:#fff;background:linear-gradient(135deg,#1e6bff,#4aa3ff);border:0;border-radius:14px;padding:11px 16px;margin:3px 3px 3px 0;box-shadow:0 4px 16px #1a6bff55}
+button.s{background:#ffffff0d;border:1px solid #4a7dff88;color:#a9c8ff;box-shadow:none}
+button.d{background:linear-gradient(135deg,#e53935,#ff6f60);box-shadow:0 4px 14px #e5393555}
+.ib{width:38px;height:38px;padding:0;margin:0;border-radius:12px}
+input,textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid #2f5bd677;background:#0a1534;color:var(--t);font:inherit;font-size:15px;margin:4px 0}
+.srch{position:relative}.srch .ic{position:absolute;left:12px;top:14px;color:var(--m)}.srch input{padding-left:42px;margin:0 0 12px}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.qa .btn,.qa button{flex-direction:column;gap:6px;margin:0;padding:14px 4px;font-size:13px;line-height:1.2;text-align:center;min-width:0;background:linear-gradient(160deg,#16296a,#0b1840);border:1px solid #3b63d0aa;border-radius:20px;box-shadow:0 0 20px #2a6bff44}
+.qa .ic{width:30px;height:30px;color:#6db0ff;filter:drop-shadow(0 0 6px #2f7bff)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px}
+.chips button{margin:0;padding:8px 14px;border-radius:999px;font-size:14px;white-space:nowrap;flex:none}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.dc{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #2f5bd633}.dc:last-child{border:0}
+.dc img{width:64px;height:84px;object-fit:cover;border-radius:10px;background:#ffffff14;border:1px solid var(--ln);flex:none}
+.dc .in{flex:1;min-width:0}.dc b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dc small{color:var(--m)}
+.ac{display:flex;gap:6px;margin-top:8px}
+.ck{width:20px!important;height:20px;margin:0!important;accent-color:#2f7bff;flex:none}
+.em{text-align:center;color:var(--m);padding:24px 8px}.em .ic{width:48px;height:48px;color:#3b63d0;display:block;margin:0 auto 8px}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tl button{flex-direction:column;gap:4px;margin:0;font-size:13px;padding:12px 4px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#08122cee;backdrop-filter:blur(12px);border-top:1px solid var(--ln);z-index:4}
+nav button{flex:1;flex-direction:column;gap:2px;font-size:12px;background:none;box-shadow:none;color:var(--m);border-radius:0;margin:0;padding:9px 0 11px}
+nav button.on{color:#6db0ff}nav button.on .ic{filter:drop-shadow(0 0 6px #2f7bff)}
+#fab{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5aa2ff,#0b3bb5);box-shadow:0 0 0 4px #08122c,0 0 30px #2f7bff;display:flex;align-items:center;justify-content:center;z-index:5;color:#fff}
+#fab .ic{width:32px;height:32px}
 .hid{display:none!important}
-#ed{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:9}
-#cv{flex:1;min-height:0;width:100%;touch-action:none}
-.bar{background:#111;padding:6px;display:flex;flex-wrap:wrap}
+#ed{position:fixed;inset:0;background:#050b1e;display:none;flex-direction:column;z-index:9}
+.eh{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-weight:700;background:#08122c;border-bottom:1px solid var(--ln)}.eh button{margin:0}
+#cv{flex:1;min-height:0;width:100%;touch-action:none;background:#02060f}
+#ed .chips{padding:10px 12px 0;margin:0}
+.et{display:flex;gap:6px;padding:8px 10px 14px;overflow-x:auto}.et button{flex:1;flex-direction:column;font-size:12px;gap:3px;padding:8px 6px;margin:0;white-space:nowrap}
+.bar{display:flex;gap:6px;padding:10px;background:#08122c;align-items:center}
 #sp{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:10}
 #sp div{background:var(--c);padding:12px;border-radius:14px}
-#sc{background:#fff;border:1px solid #888;touch-action:none;display:block}
-.qa{display:flex;flex-wrap:wrap}.qa .btn,.qa button{flex:1 1 44%;text-align:center}#fc button{padding:7px 12px}#qr{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:11}#qv{flex:1;min-height:0;width:100%;object-fit:cover}#tt{position:fixed;left:12px;right:12px;bottom:80px;background:#000d;color:#fff;padding:10px;border-radius:10px;display:none;z-index:12;text-align:center}</style></head><body>
-<header><span style="background:#e53935;padding:2px 9px;border-radius:7px;margin-right:8px">PDF</span>Scanner</header>
+#sc{background:#fff;border:1px solid #888;touch-action:none;display:block;border-radius:10px}
+#tt{position:fixed;left:12px;right:12px;bottom:90px;background:#000d;color:#fff;padding:10px;border-radius:10px;display:none;z-index:12;text-align:center}
+#qr{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:11}
+#qv{flex:1;min-height:0;width:100%;object-fit:cover}
+</style></head><body>
+<header><b>PDF</b>Scanner</header><svg style="position:absolute;width:0;height:0" aria-hidden="true"><symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z"/><path d="M12 6v13"/></symbol><symbol id="i-idcard" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-2 5.4-2 6 0M14 10h4M14 13h3"/></symbol><symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></symbol><symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/></symbol><symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 20h3M20 15v2"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></symbol><symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></symbol><symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="M7 5v14M4 16l3 3 3-3M17 19V5M14 8l3-3 3 3"/></symbol><symbol id="i-merge" viewBox="0 0 24 24"><rect x="3" y="3" width="11" height="11" rx="2"/><rect x="10" y="10" width="11" height="11" rx="2"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"/></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a1 1 0 0 1 1-1h5l2 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13M10 11v6M14 11v6"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-crop" viewBox="0 0 24 24"><path d="M7 3v14h14M3 7h14v14"/></symbol><symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2M20 4v5h-5"/></symbol><symbol id="i-wand" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18 15v4M16 17h4"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M3 20c3 0 4-5 6-5s2 3 4 3 3-6 8-6"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol><symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol><symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/><path d="M12 12v6M9.5 14.5L12 12l2.5 2.5"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4zM10 20v-6h4v6"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol><symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24"><path d="M4 16l8-9 7 6-6 6H8z"/><path d="M14 19h6"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/></symbol><symbol id="i-translate" viewBox="0 0 24 24"><path d="M4 6h8M8 4v2M6 6c0 4 3 7 6 8M11 6c0 3-3 6-6 8M13 20l4-10 4 10M14.5 17h5"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol></svg>
 <main>
 <div id="v0">
- <div class="card"><input id="q" placeholder="🔍 Поиск документов" oninput="lib0()">
+ <div class="card"><div class="srch"><svg class="ic"><use href="#i-search"/></svg><input id="q" placeholder="Поиск документов" oninput="lib0()"></div>
  <div class="qa">
-  <label class="btn">📷 Документ<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files]);this.value=''"></label>
-  <label class="btn">🖼 Фото<input type="file" accept="image/*" multiple hidden onchange="nw([...this.files]);this.value=''"></label>
-  <label class="btn">📖 Книга<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files],'book');this.value=''"></label><label class="btn">🪪 Удостоверение<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files],1);this.value=''"></label><label class="btn">📄 Импорт PDF<input type="file" accept="application/pdf" hidden onchange="ip(this.files[0]);this.value=''"></label><button onclick="qr()">▦ QR-код</button><button onclick="document.querySelectorAll('nav button')[1].click()">🧰 PDF-инструменты</button>
+  <label class="btn"><svg class="ic"><use href="#i-camera"/></svg>Документ<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files]);this.value=''"></label>
+  <label class="btn"><svg class="ic"><use href="#i-image"/></svg>Фото<input type="file" accept="image/*" multiple hidden onchange="nw([...this.files]);this.value=''"></label>
+  <label class="btn"><svg class="ic"><use href="#i-book"/></svg>Книга<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files],'book');this.value=''"></label>
+  <label class="btn"><svg class="ic"><use href="#i-idcard"/></svg>Удостоверение<input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files],1);this.value=''"></label>
+  <label class="btn"><svg class="ic"><use href="#i-pdf"/></svg>Импорт PDF<input type="file" accept="application/pdf" hidden onchange="ip(this.files[0]);this.value=''"></label>
+  <button onclick="qr()"><svg class="ic"><use href="#i-qr"/></svg>QR-код</button>
  </div></div>
- <div class="card"><div id="fc"></div><button class="s" onclick="SO=!SO;lib0()">⇅ Сортировка</button><button class="s" onclick="mgd()">⧉ Объединить выбранные</button><div id="dl"></div></div>
+ <div id="ld"></div>
+ <h3>Недавнее</h3>
+ <div class="card"><div class="chips" id="fc"></div>
+  <div class="row"><button class="s" onclick="SO=!SO;lib0()"><svg class="ic"><use href="#i-sort"/></svg>Сортировка</button><button class="s" onclick="mgd()"><svg class="ic"><use href="#i-merge"/></svg>Объединить</button><button class="s" onclick="dup()"><svg class="ic"><use href="#i-merge"/></svg>Дубликаты</button></div>
+  <div id="dl"></div></div>
 </div>
 <div id="v1" class="hid">
- <div class="card"><button class="s" onclick="bk()">← Назад</button><input id="nm" placeholder="Название документа">
-  <label class="btn">📷 Снять<input type="file" accept="image/*" capture="environment" hidden onchange="add([...this.files],1);this.value=''"></label><label class="btn">🖼 Добавить<input type="file" accept="image/*" multiple hidden onchange="add([...this.files]);this.value=''"></label></div>
+ <div class="card"><div class="row" style="align-items:center"><button class="s ib" onclick="bk()"><svg class="ic"><use href="#i-back"/></svg></button><input id="nm" placeholder="Название документа" style="margin:0"></div>
+  <div class="qa" style="grid-template-columns:1fr 1fr;margin-top:10px">
+   <label class="btn"><svg class="ic"><use href="#i-camera"/></svg>Снять<input type="file" accept="image/*" capture="environment" hidden onchange="add([...this.files],1);this.value=''"></label>
+   <label class="btn"><svg class="ic"><use href="#i-image"/></svg>Добавить<input type="file" accept="image/*" multiple hidden onchange="add([...this.files]);this.value=''"></label></div></div>
  <div class="card" id="ls"></div>
  <div class="card">
   <select id="pp"><option value="1">1 страница на листе</option><option value="2">2 на листе (удостоверение)</option></select>
   <input id="pw" type="password" placeholder="Пароль на PDF (необязательно)">
-  <button onclick="sv()">Сохранить PDF</button><button class="s" onclick="oc()">Распознать текст (OCR)</button><button class="s" onclick="wd()">В Word (.doc)</button><button class="s" onclick="ji()">Сохранить как JPG</button>
-  <div id="st" style="color:var(--m)"></div>
+  <button style="width:100%;margin:8px 0" onclick="sv()"><svg class="ic"><use href="#i-download"/></svg>Сохранить PDF</button>
+  <div class="tl"><button class="s" onclick="oc()"><svg class="ic"><use href="#i-text"/></svg>Текст (OCR)</button><button class="s" onclick="wd()"><svg class="ic"><use href="#i-doc"/></svg>Word</button><button class="s" onclick="ji()"><svg class="ic"><use href="#i-image"/></svg>JPG</button></div>
+  <div class="tl" style="margin-top:8px"><button class="s" onclick="xl()"><svg class="ic"><use href="#i-table"/></svg>Таблица Excel</button><button class="s" onclick="fd()"><svg class="ic"><use href="#i-list"/></svg>Найти данные</button><button class="s" onclick="tr()"><svg class="ic"><use href="#i-translate"/></svg>Перевести</button></div><select id="tl"><option value="en">Перевод на: English</option><option value="ru">Русский</option><option value="tg">Тоҷикӣ</option><option value="uz">Oʻzbek</option><option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="ar">العربية</option><option value="zh-CN">中文</option></select><div id="st" style="color:var(--m)"></div>
   <textarea id="ot" rows="6" placeholder="Здесь появится текст"></textarea>
   <button class="s" onclick="navigator.clipboard.writeText($('#ot').value)">Копировать</button>
   <button class="s" onclick="fin(new Blob([$('#ot').value],{type:'text/plain'}),'text.txt')">Сохранить .txt</button>
  </div>
 </div>
 <div id="v2" class="hid">
- <div class="card"><b>Объединить PDF</b><input id="mf" type="file" accept="application/pdf" multiple><button onclick="mg()">Объединить</button></div>
- <div class="card"><b>Разделить / извлечь страницы</b><input id="sf" type="file" accept="application/pdf"><input id="rg" placeholder="Страницы: 1-3,5"><button onclick="sp()">Извлечь</button></div>
+ <h3>PDF-инструменты</h3>
+ <div class="card"><b>Объединить PDF</b><input id="mf" type="file" accept="application/pdf" multiple><button onclick="mg()"><svg class="ic"><use href="#i-merge"/></svg>Объединить</button></div>
+ <div class="card"><b>Извлечь страницы</b><input id="sf" type="file" accept="application/pdf"><input id="rg" placeholder="Страницы: 1-3,5"><button onclick="sp()"><svg class="ic"><use href="#i-pdf"/></svg>Извлечь</button></div>
 </div>
 <div id="v3" class="hid">
+ <h3>Профиль и настройки</h3>
  <div class="card"><b>Качество PDF</b><select id="ql" onchange="localStorage.q=this.value"><option value=".6">Малый размер</option><option value=".85">Обычное</option><option value=".95">Высокое</option></select>
- <button class="s" onclick="pin()">🔒 PIN-код</button><button class="s" onclick="bkp()">☁ Резервная копия</button><label class="btn" style="background:none;color:var(--b);border:1px solid var(--b)">⤓ Восстановить<input type="file" accept="application/json" hidden onchange="rst(this.files[0]);this.value=''"></label><button class="d" onclick="ca()">Удалить все документы</button>
- <p style="color:var(--m)">Документы хранятся в этом телефоне. Резервную копию можно сохранить в Google Диск через меню «Поделиться».</p></div>
+  <div class="row" style="flex-wrap:wrap;margin-top:8px"><button class="s" onclick="pin()"><svg class="ic"><use href="#i-lock"/></svg>PIN-код</button><button class="s" onclick="bkp()"><svg class="ic"><use href="#i-cloud"/></svg>Резервная копия</button>
+  <label class="btn s" style="background:#ffffff0d;border:1px solid #4a7dff88;color:#a9c8ff;box-shadow:none"><svg class="ic"><use href="#i-download"/></svg>Восстановить<input type="file" accept="application/json" hidden onchange="rst(this.files[0]);this.value=''"></label></div>
+  <button class="d" style="margin-top:8px" onclick="ca()"><svg class="ic"><use href="#i-trash"/></svg>Удалить все документы</button>
+  <p style="color:var(--m)">Документы хранятся в этом телефоне. Резервную копию можно сохранить в Google Диск через меню «Поделиться».</p></div>
 </div>
 </main>
-<nav><button class="on" onclick="tab(0,this)">Главная</button><button onclick="tab(2,this)">Инструменты</button><button onclick="tab(3,this)">Профиль</button></nav>
-<div id="tt"></div><div id="qr"><video id="qv" playsinline muted></video><div class="bar"><span id="qt" style="color:#fff;flex:1;word-break:break-all">Наведите на QR-код</span><button onclick="qc()">Копировать</button><button onclick="qo()">Открыть</button><button class="d" onclick="qx()">✕</button></div></div>
+<nav><button class="on" onclick="tab(0,this)"><svg class="ic"><use href="#i-home"/></svg>Главная</button><button onclick="tab(2,this)"><svg class="ic"><use href="#i-tools"/></svg>Инструменты</button><button onclick="tab(3,this)"><svg class="ic"><use href="#i-user"/></svg>Профиль</button></nav>
+<label id="fab"><svg class="ic"><use href="#i-scan"/></svg><input type="file" accept="image/*" capture="environment" hidden onchange="nw([...this.files]);this.value=''"></label><div id="tt"></div><div id="qr"><video id="qv" playsinline muted></video><div class="bar"><span id="qt" style="color:#fff;flex:1;word-break:break-all">Наведите на QR-код</span><button onclick="qc()">Копировать</button><button onclick="qo()">Открыть</button><button class="d" onclick="qx()"><svg class="ic"><use href="#i-close"/></svg></button></div></div>
 
-<div id="ed"><canvas id="cv"></canvas><div class="bar">
- <button onclick="md('crop')">Обрезка</button><button onclick="au()">Авто</button><button onclick="rt()">⟳</button>
- <button onclick="fl('c')">Цвет</button><button onclick="fl('g')">Серый</button><button onclick="fl('d')">Документ</button><button onclick="fl('b')">Ч/Б</button><button onclick="fl('m')">Магия</button>
- <button onclick="sg()">Подпись</button><button class="d" onclick="ns()">✕ подпись</button><button onclick="dn()">Готово</button>
-</div></div>
+<div id="ed"><div class="eh"><span>Редактор</span><button onclick="dn()"><svg class="ic"><use href="#i-check"/></svg>Готово</button></div>
+<canvas id="cv"></canvas>
+<div class="chips"><button class="s" onclick="fl('c')">Цвет</button><button class="s" onclick="fl('g')">Серый</button><button class="s" onclick="fl('d')">Документ</button><button class="s" onclick="fl('b')">Ч/Б</button><button class="s" onclick="fl('m')">Магия</button><button class="s" onclick="fl('k')">Чистка</button></div>
+<div class="et"><button class="s" onclick="md('crop')"><svg class="ic"><use href="#i-crop"/></svg>Обрезка</button><button class="s" onclick="au()"><svg class="ic"><use href="#i-wand"/></svg>Авто</button><button class="s" onclick="md('er')"><svg class="ic"><use href="#i-eraser"/></svg>Ластик</button><button class="s" onclick="rt()"><svg class="ic"><use href="#i-rotate"/></svg>Повернуть</button><button class="s" onclick="sg()"><svg class="ic"><use href="#i-pen"/></svg>Подпись</button><button class="s" onclick="ns()"><svg class="ic"><use href="#i-close"/></svg>Без подписи</button></div></div>
 
 <div id="sp"><div><canvas id="sc" width="300" height="150"></canvas>
  <button class="s" onclick="sc.getContext('2d').clearRect(0,0,300,150)">Очистить</button>
@@ -94,7 +129,7 @@ TS=['https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js','htt
 const ld=f=>new Promise(r=>{const i=new Image();i.onload=()=>{const k=Math.min(1,2000/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*k|0;c.height=i.height*k|0;c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(i.src);r(c)};i.src=URL.createObjectURL(f)});
 
 function flt(c,t){
- if(t=='c')return;
+ if(t=='c')return;if(t=='k'){ck(c);return}
  const x=c.getContext('2d'),d=x.getImageData(0,0,c.width,c.height),a=d.data;let s=0;
  for(let i=0;i<a.length;i+=4){const g=.3*a[i]+.59*a[i+1]+.11*a[i+2];a[i]=a[i+1]=a[i+2]=g;s+=g}
  const m=s/(a.length/4);if(t=='m'){am(a,c.width,c.height);x.putImageData(d,0,0);return}
@@ -112,7 +147,7 @@ function rd(p){
 
 function th(p){const r=rd(p),k=120/Math.max(r.width,r.height),t=document.createElement('canvas');t.width=r.width*k|0||1;t.height=r.height*k|0||1;t.getContext('2d').drawImage(r,0,0,t.width,t.height);return t.toDataURL('image/jpeg',.6)}
 
-function ls0(){$('#ls').innerHTML=P.map((p,i)=>`<div class="pg"><img src="${p.t}" onclick="edit(${i})"><span>Стр. ${i+1}</span><button class="s" onclick="mv(${i},-1)">↑</button><button class="s" onclick="mv(${i},1)">↓</button><button class="d" onclick="P.splice(${i},1);ls()">✕</button></div>`).join('')||'<span style="color:var(--m)">Страниц нет. Снимите документ или выберите фото.</span>'}
+function ls0(){$('#ls').innerHTML=P.map((p,i)=>`<div class="dc"><img src="${p.t}" onclick="edit(${i})"><div class="in"><b>Страница ${i+1}</b><small>Нажмите на миниатюру, чтобы править</small><div class="ac"><button class="s ib" onclick="edit(${i})">${I('crop')}</button><button class="s ib" onclick="mv(${i},-1)">${I('up')}</button><button class="s ib" onclick="mv(${i},1)">${I('down')}</button><button class="d ib" onclick="P.splice(${i},1);ls()">${I('trash')}</button></div></div></div>`).join('')||`<div class="em">${I('camera')}Страниц нет. Снимите документ или добавьте фото.</div>`}
 function mv(i,d){const j=i+d;if(j<0||j>=P.length)return;[P[i],P[j]]=[P[j],P[i]];ls()}
 async function add(fs,e){for(const f of fs){const p={o:await ld(f),q:Q0(),f:'d',s:null};p.q=await det(p.o);p.t=th(p);P.push(p)}tt('');ls();if(e&&fs.length)edit(P.length-1)}
 
@@ -126,15 +161,18 @@ function ns(){cur.s=null;dr()}
 
 function dr(){
  const cv=$('#cv'),x=cv.getContext('2d'),W=cv.width=cv.clientWidth,H=cv.height=cv.clientHeight,
- src=mode=='crop'?cur.o:rd(cur),k=Math.min(W/src.width,H/src.height),dw=src.width*k,dh=src.height*k,ox=(W-dw)/2,oy=(H-dh)/2;
+ src=(mode=='crop'||mode=='er')?cur.o:rd(cur),k=Math.min(W/src.width,H/src.height),dw=src.width*k,dh=src.height*k,ox=(W-dw)/2,oy=(H-dh)/2;
  G={ox,oy,dw,dh};x.drawImage(src,ox,oy,dw,dh);
- if(mode=='crop'){const Z=cur.q.map(([u,v])=>[ox+u*dw,oy+v*dh]);x.strokeStyle=x.fillStyle='#1a73e8';x.lineWidth=3;x.beginPath();Z.forEach(([u,v],i)=>i?x.lineTo(u,v):x.moveTo(u,v));x.closePath();x.stroke();Z.forEach(([u,v])=>{x.beginPath();x.arc(u,v,14,0,7);x.fill()})}}
+ if(mode=='crop'){const Z=cur.q.map(([u,v])=>[ox+u*dw,oy+v*dh]),pt=()=>Z.forEach(([u,v],i)=>i?x.lineTo(u,v):x.moveTo(u,v));
+ x.save();x.beginPath();x.rect(0,0,W,H);pt();x.closePath();x.fillStyle='#050b1e99';x.fill('evenodd');x.restore();
+ x.strokeStyle='#4aa3ff';x.lineWidth=2.5;x.shadowColor='#2f7bff';x.shadowBlur=10;x.beginPath();pt();x.closePath();x.stroke();x.shadowBlur=0;
+ Z.forEach(([u,v])=>{x.beginPath();x.arc(u,v,15,0,7);x.fillStyle='#ffffffee';x.fill();x.beginPath();x.arc(u,v,10,0,7);x.fillStyle='#2f7bff';x.fill()})}}
 
 const cv=$('#cv');
 cv.onpointerdown=e=>{
  const r=cv.getBoundingClientRect(),u=e.clientX-r.left,v=e.clientY-r.top;dg=-1;
  if(mode=='crop'){let best=50;cur.q.forEach(([a,b],i)=>{const d=Math.hypot(G.ox+a*G.dw-u,G.oy+b*G.dh-v);if(d<best){best=d;dg=i}})}
- else if(cur.s){cur.s={x:cl((u-G.ox)/G.dw),y:cl((v-G.oy)/G.dh)};dr()}};
+ else if(cur.s&&mode=='res'){cur.s={x:cl((u-G.ox)/G.dw),y:cl((v-G.oy)/G.dh)};dr()}};
 cv.onpointermove=e=>{if(dg<0)return;const r=cv.getBoundingClientRect();cur.q[dg]=[cl((e.clientX-r.left-G.ox)/G.dw),cl((e.clientY-r.top-G.oy)/G.dh)];dr()};
 cv.onpointerup=()=>dg=-1;
 
@@ -161,11 +199,11 @@ async function sv(){
 
 async function oc(){
  if(!P.length)return alert('Нет страниц');
- const st=$('#st');let s='';
+ const st=$('#st');let s='';OL=[];
  try{st.textContent='Загрузка распознавания (нужен интернет в первый раз)…';await lib(TS);
   const w=await Tesseract.createWorker('rus+eng');
   for(let i=0;i<P.length;i++){st.textContent=`Страница ${i+1} из ${P.length}…`;
-   const {data}=await w.recognize(rd(P[i]));s+=(P.length>1?`--- Стр. ${i+1} ---\n`:'')+data.text+'\n'}
+   const {data}=await w.recognize(rd(P[i]),{},{text:true,blocks:true});gl(data).forEach(l=>OL.push((l.words||[]).map(q=>({t:q.text,x0:q.bbox.x0,x1:q.bbox.x1,y0:q.bbox.y0,y1:q.bbox.y1}))));s+=(P.length>1?`--- Стр. ${i+1} ---\n`:'')+data.text+'\n'}
   await w.terminate();$('#ot').value=s;st.textContent='Готово'}
  catch(e){st.textContent='Ошибка: '+(e.message||e)}}
 
@@ -187,7 +225,7 @@ let D=null,FF='',SO=false,DT=0,tm,QS,QI;const FO=JSON.parse(localStorage.fo||'[]
 const DB=new Promise((r,j)=>{const q=indexedDB.open('ps',1);q.onupgradeneeded=()=>{q.result.createObjectStore('m',{keyPath:'id'});q.result.createObjectStore('p',{keyPath:'id'})};q.onsuccess=()=>r(q.result);q.onerror=j});
 const tx=async(st,m,f)=>{const d=await DB;return new Promise((r,j)=>{const t=d.transaction(st,m),q=f(t.objectStore(st));t.oncomplete=()=>r(q&&q.result);t.onerror=j})};
 const fs_=src=>new Promise(r=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=i.width;c.height=i.height;c.getContext('2d').drawImage(i,0,0);r(c)};i.src=src});
-function show(k){['v0','v1','v2','v3'].forEach((x,i)=>$('#'+x).classList.toggle('hid',i!=k))}
+function show(k){$('#fab').style.display=k==0?'flex':'none';['v0','v1','v2','v3'].forEach((x,i)=>$('#'+x).classList.toggle('hid',i!=k))}
 function tab(n,b){document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');n==0?bk():show(n)}
 function ls(z){ls0();if(!z)sd()}
 function sd(){DT=1;clearTimeout(tm);tm=setTimeout(sdo,600)}
@@ -211,9 +249,11 @@ async function op(id){
 $('#nm').oninput=()=>{if(D){D.name=$('#nm').value||'Скан';sd()}};
 async function lib0(){
  const m=(await tx('m','readonly',s=>s.getAll()))||[],q=$('#q').value.toLowerCase();
+ const lt=[...m].sort((x,y)=>y.ts-x.ts)[0];
+ $('#ld').innerHTML=lt?`<h3>Последний документ</h3><div class="card"><div class="dc" style="border:0;padding:0"><img src="${lt.t}" onclick="op(${lt.id})"><div class="in"><b onclick="op(${lt.id})">${esc(lt.name)}</b><small>${new Date(lt.ts).toLocaleString('ru')} · ${lt.n} стр.</small><div class="ac"><button onclick="op(${lt.id})">${I('edit')}Открыть</button><button class="s" onclick="shr(${lt.id})">${I('pdf')}PDF</button></div></div></div></div>`:'';
  const a=m.filter(x=>(!FF||x.folder==FF)&&x.name.toLowerCase().includes(q)).sort((x,y)=>SO?x.name.localeCompare(y.name):y.ts-x.ts);
- $('#fc').innerHTML=['',...FO].map((f,i)=>`<button class="${FF==f?'':'s'}" onclick="FF=FO[${i-1}]||'';lib0()">${f?esc(f):'Все'}</button>`).join('')+'<button class="s" onclick="nf()">＋ папка</button>';
- $('#dl').innerHTML=a.map(x=>`<div class="pg"><input type="checkbox" class="ck" value="${x.id}" style="width:auto"><img src="${x.t}" onclick="op(${x.id})"><span onclick="op(${x.id})"><b>${esc(x.name)}</b><br><small style="color:var(--m)">${new Date(x.ts).toLocaleString('ru')} · ${x.n} стр.${x.folder?' · 📁'+esc(x.folder):''}</small></span><button class="s" onclick="shr(${x.id})">↗</button><button class="s" onclick="rn(${x.id})">✎</button><button class="s" onclick="mf(${x.id})">📁</button><button class="d" onclick="dd(${x.id})">✕</button></div>`).join('')||'<span style="color:var(--m)">Документов нет. Нажмите «Документ» или «Фото».</span>'}
+ $('#fc').innerHTML=['',...FO].map((f,i)=>`<button class="${FF==f?'':'s'}" onclick="FF=FO[${i-1}]||'';lib0()">${f?esc(f):'Все'}</button>`).join('')+`<button class="s" onclick="nf()">${I('plus')}Папка</button>`;
+ $('#dl').innerHTML=a.map(x=>`<div class="dc"><input type="checkbox" class="ck" value="${x.id}"><img src="${x.t}" onclick="op(${x.id})"><div class="in"><b onclick="op(${x.id})">${esc(x.name)}</b><small>${new Date(x.ts).toLocaleDateString('ru')} · ${x.n} стр.${x.folder?' · '+esc(x.folder):''}</small><div class="ac"><button class="s ib" onclick="shr(${x.id})">${I('share')}</button><button class="s ib" onclick="rn(${x.id})">${I('edit')}</button><button class="s ib" onclick="mf(${x.id})">${I('folder')}</button><button class="d ib" onclick="dd(${x.id})">${I('trash')}</button></div></div></div>`).join('')||`<div class="em">${I('pdf')}Документов пока нет.<br>Нажмите «Документ» или кнопку камеры.</div>`}
 async function um(id,f){const m=await tx('m','readonly',s=>s.get(id));if(f(m)===false)return;await tx('m','readwrite',s=>s.put(m));lib0()}
 const rn=id=>um(id,m=>{const n=prompt('Новое название',m.name);if(!n)return false;m.name=n});
 const mf=id=>um(id,m=>{const n=prompt('Папка (пусто — без папки). Есть: '+FO.join(', '),m.folder);if(n===null)return false;if(n&&!FO.includes(n)){FO.push(n);localStorage.fo=JSON.stringify(FO)}m.folder=n});
@@ -258,12 +298,37 @@ function dl(o){
  const f=(A,n)=>{const a=A.findIndex(v=>v>n*.08),b=A.length-1-[...A].reverse().findIndex(v=>v>n*.08);return a<0?[0,1]:[a/A.length,(b+1)/A.length]};
  const[x0,x1]=f(C,h),[y0,y1]=f(R,w);
  return(x1-x0)*(y1-y0)<.2?Q0():[[x0,y0],[x1,y0],[x1,y1],[x0,y1]]}
+function dqa(a,w,h){
+ const N=w*h,g=new Uint8Array(N),H=new Array(256).fill(0);
+ for(let i=0;i<N;i++){const v=(.3*a[i*4]+.59*a[i*4+1]+.11*a[i*4+2])|0;g[i]=v;H[v]++}
+ let sm=0;for(let i=0;i<256;i++)sm+=i*H[i];
+ let sb=0,wb=0,bv=0,t=128;
+ for(let i=0;i<256;i++){wb+=H[i];if(!wb)continue;const wf=N-wb;if(!wf)break;sb+=i*H[i];const mb=sb/wb,mf=(sm-sb)/wf,v=wb*wf*(mb-mf)*(mb-mf);if(v>bv){bv=v;t=i}}
+ let res=null,bs=0;
+ for(const pol of[true,false]){
+  const m=new Uint8Array(N);for(let i=0;i<N;i++)m[i]=((g[i]>t)===pol)?1:0;
+  const L=new Uint8Array(N);let bl=null;
+  for(let s=0;s<N;s++){
+   if(!m[s]||L[s])continue;const st=[s],cp=[];L[s]=1;
+   while(st.length){const q=st.pop();cp.push(q);const px=q%w,py=(q/w)|0;
+    if(px>0&&m[q-1]&&!L[q-1]){L[q-1]=1;st.push(q-1)}
+    if(px<w-1&&m[q+1]&&!L[q+1]){L[q+1]=1;st.push(q+1)}
+    if(py>0&&m[q-w]&&!L[q-w]){L[q-w]=1;st.push(q-w)}
+    if(py<h-1&&m[q+w]&&!L[q+w]){L[q+w]=1;st.push(q+w)}}
+   if(!bl||cp.length>bl.length)bl=cp}
+  if(!bl||bl.length<N*.15||bl.length>N*.97)continue;
+  let a1=1e9,a2=-1e9,a3=-1e9,a4=1e9,TL,TR,BR,BL;
+  for(const q of bl){const px=q%w,py=(q/w)|0,s=px+py,d=px-py;
+   if(s<a1){a1=s;TL=[px,py]}if(s>a3){a3=s;BR=[px,py]}if(d>a2){a2=d;TR=[px,py]}if(d<a4){a4=d;BL=[px,py]}}
+  const Q=[TL,TR,BR,BL],ar=Math.abs(TL[0]*TR[1]-TR[0]*TL[1]+TR[0]*BR[1]-BR[0]*TR[1]+BR[0]*BL[1]-BL[0]*BR[1]+BL[0]*TL[1]-TL[0]*BL[1])/2,fill=bl.length/Math.max(1,ar);
+  if(fill>bs&&fill<1.15){bs=fill;res=Q.map(([px,py])=>[(px+.5)/w,(py+.5)/h])}}
+ return res&&bs>.6?res:null}
+function dq(o){
+ const k=220/Math.max(o.width,o.height),w=Math.max(8,o.width*k|0),h=Math.max(8,o.height*k|0),c=document.createElement('canvas');c.width=w;c.height=h;
+ const x=c.getContext('2d');x.filter='blur(2px)';x.drawImage(o,0,0,w,h);
+ return dqa(x.getImageData(0,0,w,h).data,w,h)||dl(o)}
 let NOD=0;
-async function det(o){if(NOD)return Q0();
- try{if(!CV)tt('Первый раз: загружаю модуль авто-обрезки (около 10 МБ)…');
-  const c=await Promise.race([cvl(),new Promise((_,j)=>setTimeout(j,90000))]);
-  tt('Ищу края документа…');return dcv(c,o)}
- catch(e){return dl(o)}}
+async function det(o){if(NOD)return Q0();try{return dq(o)}catch(e){return Q0()}}
 async function au(){tt('Ищу края документа…');cur.q=await det(cur.o);tt('');mode='crop';dr()}
 function wp(p){
  const k=JSON.stringify(p.q);if(p.wk===k)return p.wc;
@@ -323,5 +388,59 @@ async function lk(){
 async function bkp(){const m=await tx('m','readonly',s=>s.getAll()),q=await tx('p','readonly',s=>s.getAll());if(!m.length)return alert('Документов пока нет');fin(new Blob([JSON.stringify({m,p:q})],{type:'application/json'}),'pdf-scanner-backup.json')}
 async function rst(f){if(!f)return;const j=JSON.parse(await f.text());for(const x of j.m)await tx('m','readwrite',s=>s.put(x));for(const x of j.p)await tx('p','readwrite',s=>s.put(x));lib0();alert('Восстановлено документов: '+j.m.length)}
 
+let OL=[],ER=null;
+const gl=d=>d.lines||(d.blocks||[]).flatMap(b=>(b.paragraphs||[]).flatMap(q=>q.lines||[]));
+function ck(c){
+ const w=c.width,h=c.height,k=Math.max(2,Math.round(Math.max(w,h)/80)),sw=Math.max(4,w/k|0),sh=Math.max(4,h/k|0),s=document.createElement('canvas');s.width=sw;s.height=sh;
+ const sx=s.getContext('2d');sx.drawImage(c,0,0,sw,sh);const d=sx.getImageData(0,0,sw,sh),a=d.data,r=4,T=new Uint8ClampedArray(a.length);
+ for(let y=0;y<sh;y++)for(let x=0;x<sw;x++)for(let m=0;m<3;m++){let v=0;for(let i=-r;i<=r;i++){const xx=Math.min(sw-1,Math.max(0,x+i));v=Math.max(v,a[(y*sw+xx)*4+m])}T[(y*sw+x)*4+m]=v;T[(y*sw+x)*4+3]=255}
+ for(let y=0;y<sh;y++)for(let x=0;x<sw;x++)for(let m=0;m<3;m++){let v=0;for(let i=-r;i<=r;i++){const yy=Math.min(sh-1,Math.max(0,y+i));v=Math.max(v,T[(yy*sw+x)*4+m])}a[(y*sw+x)*4+m]=v}
+ sx.putImageData(d,0,0);
+ const B=document.createElement('canvas');B.width=w;B.height=h;const bx=B.getContext('2d');bx.filter='blur('+Math.max(2,k)+'px)';bx.drawImage(s,0,0,w,h);
+ const cx=c.getContext('2d'),I=cx.getImageData(0,0,w,h),b=bx.getImageData(0,0,w,h).data,p=I.data;
+ for(let i=0;i<p.length;i+=4)for(let m=0;m<3;m++){const v=Math.min(255,p[i+m]*255/Math.max(40,b[i+m]));p[i+m]=Math.max(0,Math.min(255,(v-40)*1.18+40))}
+ cx.putImageData(I,0,0)}
+function eraseAt(u,v){
+ const o=cur.o,k=G.dw/o.width,x=(u-G.ox)/k,y=(v-G.oy)/k,R=Math.max(8,28/k),cx=o.getContext('2d');let r=0,g=0,b=0,n=0;
+ for(let i=0;i<10;i++){const a=i*Math.PI/5,px=Math.round(x+Math.cos(a)*R*1.7),py=Math.round(y+Math.sin(a)*R*1.7);
+  if(px<0||py<0||px>=o.width||py>=o.height)continue;const d=cx.getImageData(px,py,1,1).data;r+=d[0];g+=d[1];b+=d[2];n++}
+ if(!n)return;r=r/n|0;g=g/n|0;b=b/n|0;
+ const gr=cx.createRadialGradient(x,y,R*.5,x,y,R);gr.addColorStop(0,`rgba(${r},${g},${b},1)`);gr.addColorStop(1,`rgba(${r},${g},${b},0)`);
+ cx.fillStyle=gr;cx.beginPath();cx.arc(x,y,R,0,7);cx.fill()}
+cv.addEventListener('pointerdown',e=>{if(mode!='er')return;const r=cv.getBoundingClientRect();ER=[e.clientX-r.left,e.clientY-r.top];eraseAt(ER[0],ER[1]);dr()});
+cv.addEventListener('pointermove',e=>{if(!ER||mode!='er')return;const r=cv.getBoundingClientRect(),u=e.clientX-r.left,v=e.clientY-r.top;if(Math.hypot(u-ER[0],v-ER[1])>10){ER=[u,v];eraseAt(u,v);dr()}});
+cv.addEventListener('pointerup',()=>{if(ER){ER=null;delete cur.src;delete cur.wk}});
+async function xl(){
+ await oc();let rows;
+ if(OL.some(l=>l.length)){rows=OL.filter(l=>l.length).map(l=>{const c=[];let t='',la=null;l.forEach(w=>{if(la&&w.x0-la.x1>(w.y1-w.y0)*1.2){c.push(t);t=w.t}else t+=(t?' ':'')+w.t;la=w});c.push(t);return c})}
+ else rows=$('#ot').value.split('\n').filter(x=>x.trim()).map(l=>l.split(/\s{2,}|\t/));
+ if(!rows.length)return alert('Текст не найден');
+ fin(new Blob(['\ufeff<html><head><meta charset="utf-8"></head><body><table border="1">'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</table></body></html>'],{type:'application/vnd.ms-excel'}),D.name+'.xls')}
+async function fd(){
+ await oc();const t=$('#ot').value;if(!t)return;
+ const f=re=>[...new Set(t.match(re)||[])],
+ o={'Даты':f(/\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b/g),'Суммы':f(/\b\d[\d ]{0,12}[.,]\d{2}\b/g),'Телефоны':f(/\+?\d[\d ()-]{8,16}\d/g),'Email':f(/[\w.+-]+@[\w-]+\.[\w.]+/g),'Ссылки':f(/https?:\/\/\S+/g),'Длинные номера (ИНН, счета)':f(/\b\d{9,20}\b/g)},
+ r=Object.entries(o).filter(([k,v])=>v.length).map(([k,v])=>k+':\n'+v.join('\n')).join('\n\n');
+ $('#ot').value=t+'\n\n=== Найденные данные ===\n'+(r||'Ничего не найдено')}
+async function tr(){
+ const t=$('#ot').value.trim();if(!t)return alert('Сначала распознайте текст (кнопка «Текст (OCR)»)');
+ if(!confirm('Текст будет отправлен в онлайн-переводчик MyMemory (бесплатный лимит около 5000 символов в день). Продолжить?'))return;
+ const L=$('#tl').value,parts=t.match(/[\s\S]{1,450}(?:\s|$)/g)||[t];let out='';
+ for(let i=0;i<parts.length;i++){$('#st').textContent=`Перевод ${i+1} из ${parts.length}…`;
+  const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(parts[i])+'&langpair=Autodetect|'+L),j=await r.json();
+  if(j.responseStatus!=200)throw new Error(j.responseDetails||'Ошибка перевода');out+=j.responseData.translatedText+' '}
+ $('#st').textContent='Готово';$('#ot').value=out.trim()}
+const dh=src=>new Promise(r=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=9;c.height=8;const x=c.getContext('2d');x.drawImage(i,0,0,9,8);const d=x.getImageData(0,0,9,8).data,g=[];for(let y=0;y<8;y++)for(let q=0;q<8;q++){const a=(y*9+q)*4,b=a+4;g.push(d[a]+d[a+1]+d[a+2]>d[b]+d[b+1]+d[b+2]?1:0)}r(g)};i.onerror=()=>r([]);i.src=src}),
+hm=(a,b)=>a.reduce((s,v,i)=>s+(v!=b[i]),0);
+async function dup(){
+ const m=await tx('m','readonly',s=>s.getAll());tt('Ищу дубликаты…');const hs=[];for(const x of m)hs.push([x,await dh(x.t)]);
+ const g=[];hs.forEach(([x,a],i)=>{for(let j=i+1;j<hs.length;j++)if(x.n==hs[j][0].n&&a.length&&hm(a,hs[j][1])<=4)g.push([x,hs[j][0]])});tt('');
+ if(!g.length)return alert('Дубликатов не найдено');
+ const gone=new Set();
+ for(const [a,b] of g){if(gone.has(a.id)||gone.has(b.id))continue;
+  if(confirm(`Похожие документы:\n«${a.name}» и «${b.name}»\nУдалить второй («${b.name}»)?`)){gone.add(b.id);await tx('m','readwrite',s=>s.delete(b.id));await tx('p','readwrite',s=>s.delete(b.id))}}
+ lib0()}
+
+const I=n=>`<svg class="ic"><use href="#i-${n}"/></svg>`;
 lk().then(lib0);
 </script></body></html>
